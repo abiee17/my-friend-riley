@@ -241,7 +241,9 @@ body { background: var(--mfr-ground); }
 .mfr .garden-banner figcaption { text-align: center; }
 
 /* ── grownups ── */
-.mfr .vault-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 14px; }
+.mfr .vault-banner { margin-top: 34px; }
+.mfr .vault-banner .shot { aspect-ratio: 16 / 9; }
+.mfr .vault-banner figcaption { text-align: center; }
 
 /* ── trailer ── */
 .mfr .trailer { margin-top: 30px; border-radius: 24px; overflow: hidden; box-shadow: var(--mfr-shadow); background: #000; aspect-ratio: 16 / 9; }
@@ -252,7 +254,7 @@ body { background: var(--mfr-ground); }
 
 /* ── responsive ── */
 @media (max-width: 860px) {
-  .mfr .hero, .mfr .split, .mfr .feelings, .mfr .promise, .mfr .vault-grid { grid-template-columns: minmax(0, 1fr); }
+  .mfr .hero, .mfr .split, .mfr .feelings, .mfr .promise { grid-template-columns: minmax(0, 1fr); }
   .mfr .hero .stage { order: -1; }
   .mfr .rituals { grid-template-columns: minmax(0, 1fr); }
   .mfr .split.flip > :first-child { order: 2; }
@@ -430,16 +432,18 @@ body { background: var(--mfr-ground); }
     </section>
 
     <!-- GROWNUPS -->
-    <section class="section split flip" aria-labelledby="mfr-vault-h">
-      <div class="vault-grid">
+    <section class="section" aria-labelledby="mfr-vault-h">
+      <span class="eyebrow">For self, parents &amp; carers</span>
+      <h2 id="mfr-vault-h" style="margin-top:.35em">Your Wellness Profile</h2>
+      <p class="lede" style="margin-top:14px">You, your parents, or your carers can see what the garden sees: feelings, water and sleep over time, key moments, and how humming sessions line up with the rest of the day. The garden stays playful, your info is safeguarded behind a vault PIN, and the details stay private.</p>
+      <figure class="vault-banner">
         <div class="shot"><img src="assets/profile.webp" alt="Bella's profile: wellness overview with water, sleep, emotions, humming and streak" loading="lazy"></div>
+        <figcaption>the wellness overview — a whole week of care at a glance</figcaption>
+      </figure>
+      <figure class="vault-banner">
         <div class="shot"><img src="assets/vault-insights.webp" alt="Grownup insights: logs over time, key moments and humming trends" loading="lazy"></div>
-      </div>
-      <div>
-        <span class="eyebrow">For self, parents &amp; carers</span>
-        <h2 id="mfr-vault-h" style="margin-top:.35em">Your Wellness Profile</h2>
-        <p class="lede" style="margin-top:14px">You, your parents, or your carers can see what the garden sees: feelings, water and sleep over time, key moments, and how humming sessions line up with the rest of the day. The garden stays playful, your info is safeguarded behind a vault PIN, and the details stay private.</p>
-      </div>
+        <figcaption>grownup insights — logs over time, key moments, and humming trends</figcaption>
+      </figure>
     </section>
 
     <!-- TRAILER -->
