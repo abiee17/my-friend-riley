@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="My Friend Riley: a cozy, voice-powered wellbeing game by Verse.">
+<title>My Friend Riley</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Lexend:wght@300;400;500&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* ── My Friend Riley — Verse product page ─────────────────────────────
+   Everything is scoped under .mfr so it can drop into any site without
+   leaking styles. Tokens first; components read only from tokens.      */
+:root {
+  --mfr-plum: #24163F;
+  --mfr-ink: #2B1F45;
+  --mfr-ink-soft: #5B4E78;
+  --mfr-ground: #F5F1FF;
+  --mfr-surface: #FFFFFF;
+  --mfr-line: #E2D9FA;
+  --mfr-lilac: #8A6CF0;
+  --mfr-lilac-soft: #E4DBFF;
+  --mfr-lilac-glow: rgba(182, 156, 255, .55);
+  --mfr-pink: #E5559C;
+  --mfr-leaf: #3E9A45;
+  --mfr-sun: #F4B63A;
+  --mfr-sun-soft: #FFF1C9;
+  --mfr-on-accent: #FFFFFF;
+  --mfr-shadow: 0 18px 40px -22px rgba(52, 30, 110, .45);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --mfr-ink: #F1EBFF;
+    --mfr-ink-soft: #B9ADD6;
+    --mfr-ground: #1A1230;
+    --mfr-surface: #241A40;
+    --mfr-line: #3A2D5F;
+    --mfr-lilac: #B69CFF;
+    --mfr-lilac-soft: #33265A;
+    --mfr-lilac-glow: rgba(150, 120, 255, .45);
+    --mfr-pink: #FF8CC6;
+    --mfr-leaf: #7FD27F;
+    --mfr-sun: #FFC94A;
+    --mfr-sun-soft: #3A2E1C;
+    --mfr-on-accent: #1A1230;
+    --mfr-shadow: 0 18px 40px -22px rgba(0, 0, 0, .7);
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --mfr-ink: #F1EBFF;
+  --mfr-ink-soft: #B9ADD6;
+  --mfr-ground: #1A1230;
+  --mfr-surface: #241A40;
+  --mfr-line: #3A2D5F;
+  --mfr-lilac: #B69CFF;
+  --mfr-lilac-soft: #33265A;
+  --mfr-lilac-glow: rgba(150, 120, 255, .45);
+  --mfr-pink: #FF8CC6;
+  --mfr-leaf: #7FD27F;
+  --mfr-sun: #FFC94A;
+  --mfr-sun-soft: #3A2E1C;
+  --mfr-on-accent: #1A1230;
+  --mfr-shadow: 0 18px 40px -22px rgba(0, 0, 0, .7);
+}
+
+body { background: var(--mfr-ground); }
+
+.mfr {
+  --display: "Baloo 2", "Nunito", ui-rounded, system-ui, sans-serif;
+  --body: "Lexend", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  background: var(--mfr-ground);
+  color: var(--mfr-ink);
+  font: 400 1.0625rem/1.6 var(--body);
+  padding-inline: 20px;
+  overflow-x: clip;
+}
+.mfr *, .mfr *::before, .mfr *::after { box-sizing: border-box; }
+.mfr img { max-width: 100%; display: block; }
+.mfr a { color: inherit; }
+.mfr :focus-visible { outline: 3px solid var(--mfr-sun); outline-offset: 3px; border-radius: 10px; }
+
+.mfr .wrap { max-width: 1120px; margin-inline: auto; }
+.mfr .section { padding-block: clamp(56px, 9vw, 104px); }
+.mfr .eyebrow {
+  font: 500 .78rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+  color: var(--mfr-lilac); display: inline-flex; gap: .5em; align-items: center;
+}
+.mfr .eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--mfr-sun); }
+.mfr h1, .mfr h2, .mfr h3 { font-family: var(--display); margin: 0; text-wrap: balance; letter-spacing: -.01em; }
+.mfr h2 { font-size: clamp(2rem, 4.4vw, 3.1rem); line-height: 1.02; font-weight: 800; }
+.mfr h3 { font-size: 1.45rem; line-height: 1.1; font-weight: 700; }
+.mfr p { margin: 0; max-width: 60ch; }
+.mfr .lede { color: var(--mfr-ink-soft); font-weight: 300; font-size: 1.15rem; }
+
+/* ── buttons ── */
+.mfr .btn {
+  display: inline-flex; align-items: center; gap: .55em; cursor: pointer;
+  font: 700 1.05rem/1 var(--display); padding: .95em 1.4em; border-radius: 999px;
+  border: 2px solid transparent; text-decoration: none; transition: transform .18s ease, background-color .18s ease;
+}
+.mfr .btn:hover { transform: translateY(-2px); }
+.mfr .btn-primary { background: var(--mfr-lilac); color: var(--mfr-on-accent); }
+.mfr .btn-ghost { border-color: var(--mfr-line); color: var(--mfr-ink); background: var(--mfr-surface); }
+
+/* ── HERO ─────────────────────────────────────────────────────────── */
+.mfr .hero { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(24px, 5vw, 64px);
+  align-items: center; padding-block: clamp(40px, 7vw, 88px) clamp(32px, 5vw, 64px); }
+.mfr .hero h1 { font-size: clamp(2.9rem, 7.4vw, 5.6rem); line-height: .92; font-weight: 800; margin-block: .35em .3em; }
+.mfr .hero h1 .hum {
+  color: var(--mfr-lilac); display: inline-block;
+  background: linear-gradient(transparent 62%, var(--mfr-sun-soft) 62%); padding-inline: .06em;
+}
+.mfr .hero .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.mfr .hero .facts { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 26px; font: 500 .8rem/1.4 var(--mono); color: var(--mfr-ink-soft); }
+
+/* Riley stage */
+.mfr .stage { position: relative; display: grid; justify-items: center; gap: 14px; padding-top: 92px; }
+.mfr .riley-wrap { position: relative; width: min(100%, 400px); aspect-ratio: 1; }
+.mfr .gate { position: absolute; left: 50%; bottom: 2%; width: 128%; translate: -50% 0; aspect-ratio: 900 / 550; pointer-events: none; }
+.mfr .gate img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.mfr .gate .gate-light { opacity: 0; transition: opacity .6s ease .15s; }
+.mfr .gate .door { transition: transform 1.1s cubic-bezier(.5, 0, .2, 1); will-change: transform; }
+.mfr .gate .doors { position: absolute; inset: 0; -webkit-mask: url(assets/gate-arch-mask.webp) center / 100% 100% no-repeat; mask: url(assets/gate-arch-mask.webp) center / 100% 100% no-repeat; }
+.mfr .gate.open .door-l { transform: translateX(-18%); }
+.mfr .gate.open .door-r { transform: translateX(18%); }
+.mfr .gate.open .gate-light { opacity: 1; }
+.mfr .riley-glow { position: absolute; inset: 6%; border-radius: 50%;
+  background: radial-gradient(circle at 50% 55%, var(--mfr-lilac-glow), transparent 68%); }
+.mfr .ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); pointer-events: none; }
+.mfr .ring circle { fill: none; stroke-width: 10; stroke-linecap: round; }
+.mfr .ring .track { stroke: var(--mfr-line); opacity: .7; }
+.mfr .ring .fill { stroke: var(--mfr-sun); stroke-dasharray: var(--len, 1100); stroke-dashoffset: var(--len, 1100); }
+.mfr .riley-btn { position: absolute; inset: 22% 18% 0 18%; border: 0; padding: 0; background: none; cursor: pointer;
+  border-radius: 50%; touch-action: manipulation; }
+.mfr .riley-float { width: 100%; height: 100%; animation: mfr-float 4.6s ease-in-out infinite; will-change: transform; }
+.mfr .riley { width: 100%; height: 100%; object-fit: contain; transform: rotate(var(--tilt, 0deg)) translate(var(--tx, 0px), var(--ty, 0px));
+  transition: transform .45s cubic-bezier(.2, .8, .2, 1); user-select: none; -webkit-user-drag: none; }
+.mfr .riley-btn.pop .riley { animation: mfr-pop .5s cubic-bezier(.3, 1.6, .5, 1); }
+@keyframes mfr-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+@keyframes mfr-pop { 0% { scale: 1; } 40% { scale: 1.12; } 100% { scale: 1; } }
+
+.mfr .bubble {
+  position: absolute; left: 50%; top: -6px; translate: -50% -100%; z-index: 2;
+  background: var(--mfr-surface); color: var(--mfr-ink); border: 2px solid var(--mfr-line);
+  font: 600 1.02rem/1.35 var(--display); padding: .75em 1.1em; border-radius: 22px; width: max-content; max-width: min(300px, 84vw);
+  text-align: center; box-shadow: var(--mfr-shadow); transition: opacity .25s ease, transform .25s ease;
+}
+.mfr .bubble::after { content: ""; position: absolute; left: 50%; bottom: -10px; width: 18px; height: 18px;
+  background: var(--mfr-surface); border-right: 2px solid var(--mfr-line); border-bottom: 2px solid var(--mfr-line);
+  transform: translateX(-50%) rotate(45deg); }
+.mfr .bubble.swap { opacity: 0; transform: translateY(6px); }
+
+.mfr .hum-console { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 14px; }
+.mfr .hum-btn {
+  font: 700 1.05rem/1 var(--display); padding: .9em 1.5em; border-radius: 999px; cursor: pointer; border: 0;
+  background: var(--mfr-sun); color: #2B1F45; user-select: none; touch-action: none; -webkit-user-select: none;
+  box-shadow: 0 6px 0 0 color-mix(in srgb, var(--mfr-sun) 60%, #000 40%); transition: transform .12s ease, box-shadow .12s ease;
+}
+.mfr .hum-btn[aria-pressed="true"] { transform: translateY(4px); box-shadow: 0 2px 0 0 color-mix(in srgb, var(--mfr-sun) 60%, #000 40%); }
+.mfr .readout { font: 500 .82rem/1.3 var(--mono); color: var(--mfr-ink-soft); min-width: 15ch; text-align: center; font-variant-numeric: tabular-nums; }
+.mfr .gates { font: 500 .82rem/1 var(--mono); color: var(--mfr-ink-soft); }
+.mfr .gates b { color: var(--mfr-lilac); font-weight: 500; }
+
+/* sparkle burst — transform/opacity only */
+.mfr .spark { position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px; pointer-events: none;
+  background: var(--c, var(--mfr-sun)); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+  animation: mfr-spark .9s cubic-bezier(.15, .7, .3, 1) forwards; z-index: 3; }
+@keyframes mfr-spark {
+  0% { transform: translate(0, 0) scale(.4) rotate(0); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) scale(1.1) rotate(220deg); opacity: 0; }
+}
+
+/* ── shared media frame ── */
+.mfr .shot { border-radius: 20px; overflow: hidden; background: var(--mfr-lilac-soft); box-shadow: var(--mfr-shadow); aspect-ratio: 16 / 9; }
+.mfr .shot img { width: 100%; height: 100%; object-fit: cover; }
+.mfr figure { margin: 0; display: grid; gap: 10px; }
+.mfr figcaption { font: 500 .8rem/1.4 var(--mono); color: var(--mfr-ink-soft); }
+
+/* ── story strip ── */
+.mfr .story { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; margin-top: 34px; }
+
+/* ── ride ── */
+.mfr .split { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+.mfr .points { display: grid; gap: 18px; margin-top: 26px; padding: 0; list-style: none; }
+.mfr .points li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 14px; align-items: start; }
+.mfr .points .dot { width: 34px; height: 34px; border-radius: 12px; display: grid; place-items: center;
+  background: var(--mfr-lilac-soft); color: var(--mfr-lilac); font: 800 1rem/1 var(--display); }
+.mfr .points b { font-family: var(--display); font-size: 1.12rem; font-weight: 700; display: block; line-height: 1.2; }
+.mfr .points span { color: var(--mfr-ink-soft); font-size: .98rem; }
+.mfr .ride-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.mfr .ride-grid .shot:first-child { grid-column: 1 / -1; }
+.mfr .gate-seq { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 8px; }
+.mfr .chip { font: 500 .78rem/1 var(--mono); padding: .55em .8em; border-radius: 999px; background: var(--mfr-surface);
+  border: 1px solid var(--mfr-line); color: var(--mfr-ink-soft); white-space: nowrap; }
+.mfr .chip em { font-style: normal; color: var(--mfr-lilac); }
+
+/* ── garden + feelings ── */
+.mfr .garden-hero { margin-top: 34px; }
+.mfr .garden-hero .shot { aspect-ratio: 16 / 8.2; }
+.mfr .feelings { margin-top: 40px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 340px); gap: 28px; align-items: center;
+  background: var(--mfr-surface); border: 1px solid var(--mfr-line); border-radius: 28px; padding: clamp(18px, 3vw, 32px); }
+.mfr .pets { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 10px; }
+.mfr .pet { display: grid; justify-items: center; gap: 4px; padding: 10px 6px 8px; border-radius: 18px; cursor: pointer;
+  border: 2px solid transparent; background: var(--mfr-ground); color: var(--mfr-ink); font: 500 .76rem/1 var(--mono);
+  transition: transform .18s ease, border-color .18s ease; }
+.mfr .pet img { width: 70px; height: 70px; object-fit: contain; }
+.mfr .pet:hover { transform: translateY(-3px); }
+.mfr .pet[aria-pressed="true"] { border-color: var(--mfr-lilac); background: var(--mfr-lilac-soft); }
+.mfr .pet[aria-pressed="true"] img { animation: mfr-pop .5s cubic-bezier(.3, 1.6, .5, 1); }
+.mfr .reply { display: grid; justify-items: center; gap: 12px; text-align: center; }
+.mfr .reply img { width: 150px; height: 150px; object-fit: contain; }
+.mfr .reply p { font: 600 1.15rem/1.35 var(--display); max-width: 30ch; }
+.mfr .reply small { font: 500 .76rem/1.3 var(--mono); color: var(--mfr-ink-soft); }
+
+/* ── rituals ── */
+.mfr .rituals { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 34px; }
+.mfr .ritual { display: grid; gap: 12px; align-content: start; }
+.mfr .ritual .tag { font: 500 .74rem/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
+.mfr .ritual:nth-child(1) .tag { color: #2E8BC8; }
+.mfr .ritual:nth-child(2) .tag { color: var(--mfr-lilac); }
+.mfr .ritual:nth-child(3) .tag { color: var(--mfr-pink); }
+.mfr .ritual p { color: var(--mfr-ink-soft); font-size: .98rem; }
+
+/* ── principle band ── */
+.mfr .promise { background: var(--mfr-plum); color: #F4EEFF; border-radius: 32px; padding: clamp(28px, 5vw, 56px);
+  display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .8fr); gap: 28px; align-items: center; }
+.mfr .promise h2 { color: #FFFFFF; }
+.mfr .promise p { color: #CFC3EE; margin-top: 14px; }
+.mfr .promise ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
+.mfr .promise li { font: 600 1.05rem/1.3 var(--display); color: #FFFFFF; display: flex; gap: 10px; align-items: baseline; }
+.mfr .promise li::before { content: "✦"; color: #FFC94A; }
+.mfr .promise-side { display: grid; gap: 18px; justify-items: center; }
+.mfr .promise-lotus { width: min(100%, 260px); aspect-ratio: 1; object-fit: contain; animation: mfr-float 5.2s ease-in-out infinite;
+  filter: drop-shadow(0 14px 30px rgba(255, 190, 220, .35)); }
+
+/* ── grownups ── */
+.mfr .vault-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 14px; }
+
+/* ── trailer ── */
+.mfr .trailer { margin-top: 30px; border-radius: 24px; overflow: hidden; box-shadow: var(--mfr-shadow); background: #000; aspect-ratio: 16 / 9; }
+.mfr .trailer video { width: 100%; height: 100%; display: block; }
+
+.mfr .foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 32px 48px;
+  border-top: 1px solid var(--mfr-line); font: 500 .8rem/1.5 var(--mono); color: var(--mfr-ink-soft); }
+
+/* ── responsive ── */
+@media (max-width: 860px) {
+  .mfr .hero, .mfr .split, .mfr .feelings, .mfr .promise, .mfr .vault-grid { grid-template-columns: minmax(0, 1fr); }
+  .mfr .hero .stage { order: -1; }
+  .mfr .rituals { grid-template-columns: minmax(0, 1fr); }
+  .mfr .split.flip > :first-child { order: 2; }
+}
+@media (max-width: 520px) {
+  .mfr .story, .mfr .ride-grid { grid-template-columns: minmax(0, 1fr); }
+  .mfr .riley-wrap { width: min(100%, 300px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mfr .riley-float, .mfr .promise-lotus, .mfr .riley-btn.pop .riley, .mfr .pet[aria-pressed="true"] img { animation: none; }
+  .mfr .riley, .mfr .gate .door, .mfr .gate .gate-light { transition: none; }
+  .mfr .btn, .mfr .pet { transition: none; }
+}
+</style>
+</head>
+<body style="margin:0">
+
+
+<div class="mfr" id="mfr">
+  <div class="wrap">
+
+    <!-- HERO: Riley is the thesis -->
+    <header class="hero">
+      <div>
+        <span class="eyebrow">A Verse game · in development</span>
+        <h1>Hum it out with <span class="hum">Riley</span>.</h1>
+        <p class="lede">My Friend Riley is a cozy wellbeing game for kids. Hum along on a magical rollercoaster, slice through stress, and come home to a living garden where every feeling has a furry friend.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#mfr-trailer">▶ Watch the trailer</a>
+          <a class="btn btn-ghost" href="#mfr-feelings">Meet the feelings</a>
+        </div>
+        <div class="facts"><span>For ages 7–25+</span><span>Voice-powered play</span><span>Phones &amp; tablets</span></div>
+      </div>
+
+      <div class="stage" aria-label="Interactive Riley">
+        <div class="riley-wrap" id="mfr-riley-wrap">
+          <div class="gate" id="mfr-gate" aria-hidden="true">
+            <img class="gate-beyond" src="assets/gate-beyond.webp" alt="" width="900" height="550">
+            <img class="gate-light" src="assets/gate-light.webp" alt="" width="900" height="550">
+            <div class="doors">
+              <img class="door door-l" src="assets/gate-door-l.webp" alt="" width="900" height="550">
+              <img class="door door-r" src="assets/gate-door-r.webp" alt="" width="900" height="550">
+            </div>
+            <img class="frame" src="assets/gate-frame.webp" alt="" width="900" height="550">
+          </div>
+          <div class="riley-glow"></div>
+          <svg class="ring" viewBox="0 0 400 400" aria-hidden="true">
+            <circle class="track" cx="200" cy="200" r="182"></circle>
+            <circle class="fill" id="mfr-ring" cx="200" cy="200" r="182"></circle>
+          </svg>
+          <button class="riley-btn" id="mfr-riley" type="button" aria-label="Say hi to Riley">
+            <div class="riley-float">
+              <img class="riley" id="mfr-riley-img" src="assets/mascot-idle-01.webp" alt="Riley, a glowing purple jelly friend" width="560" height="560">
+            </div>
+          </button>
+          <div class="bubble" id="mfr-bubble" role="status" aria-live="polite">Hi friend! Tap me, or hold the button and hum with me.</div>
+        </div>
+        <div class="hum-console">
+          <button class="hum-btn" id="mfr-hum" type="button" aria-pressed="false">Hold to hum</button>
+          <span class="readout" id="mfr-readout">dial ready</span>
+          <span class="gates" id="mfr-gates">gates opened <b>0</b></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- STORY -->
+    <section class="section" aria-labelledby="mfr-story-h">
+      <span class="eyebrow">Big feelings, little friend</span>
+      <h2 id="mfr-story-h" style="margin-top:.35em">Some days feel like a win. Some days feel heavy.</h2>
+      <p class="lede" style="margin-top:14px">Riley gets both. The game turns those everyday ups and downs into play kids can actually do something with: a hum, a breath, a check-in, a tiny act of care.</p>
+      <div class="story">
+        <figure><div class="shot"><img src="assets/story-school.webp" alt="Riley proudly holding a trophy at a school talent show" loading="lazy"></div><figcaption>the proud days</figcaption></figure>
+        <figure><div class="shot"><img src="assets/story-football.webp" alt="Riley looking worried on a football field" loading="lazy"></div><figcaption>and the worried ones</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- RIDE -->
+    <section class="section split" aria-labelledby="mfr-ride-h">
+      <div>
+        <span class="eyebrow">The Hum Ride</span>
+        <h2 id="mfr-ride-h" style="margin-top:.35em">A rollercoaster you steer with your voice.</h2>
+        <ul class="points">
+          <li><span class="dot">1</span><div><b>Hum to open the gates</b><span>Hold your hum inside the glowing wedge of the HumDial and the gate ahead slides open.</span></div></li>
+          <li><span class="dot">2</span><div><b>Slice the stress blobs</b><span>Swipe through flying worry blobs, and every cut gives the cart a burst of speed.</span></div></li>
+          <li><span class="dot">3</span><div><b>Breathe between gates</b><span>Calm stretches of track let kids slow down and reset before the next gate.</span></div></li>
+        </ul>
+        <div class="gate-seq" aria-label="Gate pitch progression">
+          <span class="chip">gate 1 <em>mid</em></span><span class="chip">gate 2 <em>high</em></span><span class="chip">gate 3 <em>mid → high</em></span><span class="chip">gate 4 <em>high → loud</em></span><span class="chip">gate 5 <em>mid → high → low</em></span>
+        </div>
+      </div>
+      <div class="ride-grid">
+        <div class="shot"><img src="assets/humdial.webp" alt="The HumDial, a glowing wedge dial that fills while you hum" loading="lazy"></div>
+        <div class="shot"><img src="assets/ride-countdown.webp" alt="The cart waiting at the start of a magical forest track" loading="lazy"></div>
+        <div class="shot"><img src="assets/ride-tunnel.webp" alt="The cart racing into a glowing stone gate tunnel" loading="lazy"></div>
+      </div>
+    </section>
+
+    <!-- GARDEN + FEELINGS -->
+    <section class="section" id="mfr-feelings" aria-labelledby="mfr-garden-h">
+      <span class="eyebrow">The Living Garden</span>
+      <h2 id="mfr-garden-h" style="margin-top:.35em">Every feeling has a friend who lives here.</h2>
+      <p class="lede" style="margin-top:14px">Nine emotion pets roam the garden, each with a home of its own. Care for yourself, and the whole place comes alive: the lotus blooms, the moon coaster glows, the heart tree grows with your streak.</p>
+      <div class="garden-hero"><div class="shot"><img src="assets/ride-tunnel.webp" alt="The garden home screen with emotion pets, a lotus pond ride and a moonlit coaster" loading="lazy"></div></div>
+
+      <div class="feelings">
+        <div>
+          <h3>How are you feeling today?</h3>
+          <p class="lede" style="margin:8px 0 18px;font-size:1rem">Tap a friend, just like kids do in the game.</p>
+          <div class="pets" id="mfr-pets" role="group" aria-label="Choose a feeling"></div>
+        </div>
+        <div class="reply" aria-live="polite">
+          <img id="mfr-reply-img" src="assets/pet-happy.webp" alt="" width="220" height="220">
+          <p id="mfr-reply">The happy puppy is so glad you came to the garden!</p>
+          <small>every feeling is welcome</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- RITUALS -->
+    <section class="section" aria-labelledby="mfr-rituals-h">
+      <span class="eyebrow">Little daily rituals</span>
+      <h2 id="mfr-rituals-h" style="margin-top:.35em">Care that feels like play.</h2>
+      <div class="rituals">
+        <article class="ritual">
+          <div class="shot"><img src="assets/garden.webp" alt="Water intake screen with a blooming lotus" loading="lazy"></div>
+          <span class="tag">water</span><h3>Bloom the lotus</h3>
+          <p>Drop in today's cups of water and watch a sleepy bud open into a beaming lotus.</p>
+        </article>
+        <article class="ritual">
+          <div class="shot"><img src="assets/care-water.webp" alt="Sleep screen with a moon cactus in a twilight canyon" loading="lazy"></div>
+          <span class="tag">sleep</span><h3>Count sleep stars</h3>
+          <p>Feed last night's hours to the Moon Cactus and wake it up rested and glowing.</p>
+        </article>
+        <article class="ritual">
+          <div class="shot"><img src="assets/journal-today.webp" alt="The Today journal with wishes, a gratitude seed and a login bonus" loading="lazy"></div>
+          <span class="tag">journal</span><h3>Open today's page</h3>
+          <p>Little wishes, a gratitude seed and a gentle tip, all in Riley's magic book.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- PROMISE -->
+    <section class="section" aria-labelledby="mfr-promise-h" style="padding-top:0">
+      <div class="promise">
+        <div>
+          <h2 id="mfr-promise-h">Nothing in the garden ever wilts because of you.</h2>
+          <p>No streak shaming, no scary meters, no lost progress. A missed day just means a sleepy flower waiting for a splash, and logging a hard feeling earns the same warmth as a happy one.</p>
+        </div>
+        <div class="promise-side">
+        <img class="promise-lotus" src="assets/lotus-bloom.webp" alt="A fully bloomed, smiling lotus on its pond" width="520" height="520" loading="lazy">
+        <ul>
+          <li>All feelings are valid</li>
+          <li>Rewards for honesty, not perfection</li>
+          <li>Calm, kind, and never judgy</li>
+        </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- GROWNUPS -->
+    <section class="section split flip" aria-labelledby="mfr-vault-h">
+      <div class="vault-grid">
+        <div class="shot"><img src="assets/profile.webp" alt="Bella's profile: wellness overview with water, sleep, emotions, humming and streak" loading="lazy"></div>
+        <div class="shot"><img src="assets/vault-insights.webp" alt="Grownup insights: logs over time, key moments and humming trends" loading="lazy"></div>
+      </div>
+      <div>
+        <span class="eyebrow">For grownups</span>
+        <h2 id="mfr-vault-h" style="margin-top:.35em">The Grownups Vault</h2>
+        <p class="lede" style="margin-top:14px">Behind a PIN, parents and carers see what the garden sees: feelings, water and sleep over time, key moments, and how humming sessions line up with the rest of the day. The child's world stays playful. The data stays with the grownups.</p>
+      </div>
+    </section>
+
+    <!-- TRAILER -->
+    <section class="section" id="mfr-trailer" aria-labelledby="mfr-trailer-h" style="padding-top:0">
+      <span class="eyebrow">Trailer</span>
+      <h2 id="mfr-trailer-h" style="margin-top:.35em">See Riley's world in a minute.</h2>
+      <div class="trailer">
+        <video controls playsinline preload="none" poster="assets/trailer-poster.webp">
+          <source src="assets/mfr-trailer-720p.mp4" type="video/mp4">
+        </video>
+      </div>
+    </section>
+
+    <footer class="foot">
+      <span>My Friend Riley · a Verse game</span>
+      <span>in development · art and footage from the current build</span>
+    </footer>
+  </div>
+</div>
+
+<script>
+(() => {
+  const root = document.getElementById("mfr");
+  if (!root) return;
+  const $ = (id) => document.getElementById(id);
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const A = "assets/";
+
+  // ── Riley idle frames (gentle breathing loop) ────────────────────
+  const img = $("mfr-riley-img");
+  const idle = ["mascot-idle-01", "mascot-idle-03", "mascot-idle-04", "mascot-idle-03"];
+  ["mascot-idle-02", "mascot-happy", ...idle].forEach((n) => { const i = new Image(); i.src = A + n + ".webp"; });
+  let idleIx = 0, holdPose = 0;
+  const setPose = (name) => { img.src = A + name + ".webp"; };
+  if (!reduce) setInterval(() => {
+    if (Date.now() < holdPose || humming) return;
+    idleIx = (idleIx + 1) % idle.length; setPose(idle[idleIx]);
+  }, 700);
+
+  // ── Riley leans toward the pointer (rAF-batched, transform only) ──
+  const wrap = $("mfr-riley-wrap");
+  let px = 0, py = 0, queued = false;
+  if (!reduce) window.addEventListener("pointermove", (e) => {
+    const r = wrap.getBoundingClientRect();
+    px = Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width * 1.2)));
+    py = Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (r.height * 1.2)));
+    if (queued) return; queued = true;
+    requestAnimationFrame(() => {
+      queued = false;
+      img.style.setProperty("--tilt", (px * 7).toFixed(2) + "deg");
+      img.style.setProperty("--tx", (px * 10).toFixed(1) + "px");
+      img.style.setProperty("--ty", (py * 6).toFixed(1) + "px");
+    });
+  }, { passive: true });
+
+  // ── speech bubble ────────────────────────────────────────────────
+  const bubble = $("mfr-bubble");
+  const say = (text) => {
+    bubble.classList.add("swap");
+    setTimeout(() => { bubble.textContent = text; bubble.classList.remove("swap"); }, reduce ? 0 : 180);
+  };
+
+  // ── sparkle burst ────────────────────────────────────────────────
+  const colors = ["var(--mfr-sun)", "var(--mfr-pink)", "var(--mfr-lilac)", "var(--mfr-leaf)"];
+  const burst = (count = 14) => {
+    if (reduce) return;
+    const r = wrap.getBoundingClientRect().width / 2;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement("span");
+      s.className = "spark";
+      const a = (i / count) * Math.PI * 2 + Math.random() * .4;
+      const d = r * (0.75 + Math.random() * 0.45);
+      s.style.setProperty("--dx", (Math.cos(a) * d).toFixed(0) + "px");
+      s.style.setProperty("--dy", (Math.sin(a) * d).toFixed(0) + "px");
+      s.style.setProperty("--c", colors[i % colors.length]);
+      s.addEventListener("animationend", () => s.remove(), { once: true });
+      wrap.appendChild(s);
+    }
+  };
+
+  // ── tap Riley ────────────────────────────────────────────────────
+  const hellos = [
+    "Hi friend! Want to hum with me?",
+    "You make the garden brighter just by being here.",
+    "Fun fact: humming can calm stormy inside-weather.",
+    "Our lotus is thirsty. Shall we give it a splash?",
+    "Every feeling is welcome in the garden.",
+    "The fireflies are waiting for your magic hum!",
+  ];
+  let helloIx = 0;
+  const rileyBtn = $("mfr-riley");
+  rileyBtn.addEventListener("click", () => {
+    if (humming) return;
+    setPose("mascot-idle-02"); holdPose = Date.now() + 1200;
+    rileyBtn.classList.remove("pop"); void rileyBtn.offsetWidth; rileyBtn.classList.add("pop");
+    say(hellos[helloIx = (helloIx + 1) % hellos.length]);
+    burst(8);
+  });
+
+  // ── hold to hum: fill the dial like the in-game HumDial ──────────
+  const gateEl = $("mfr-gate");
+  let gateCloseTimer = 0;
+  const GATE_OPEN_MS = 4000;
+  const ring = $("mfr-ring");
+  const LEN = 2 * Math.PI * 182;
+  ring.style.setProperty("--len", LEN.toFixed(1));
+  const humBtn = $("mfr-hum"), readout = $("mfr-readout"), gatesEl = $("mfr-gates").querySelector("b");
+  const FILL_MS = 2400;
+  let humming = false, progress = 0, last = 0, gates = 0, raf = 0;
+  const bands = ["mid", "high", "mid", "low"];
+
+  const draw = () => { ring.style.strokeDashoffset = (LEN * (1 - progress)).toFixed(1); };
+  const tick = (t) => {
+    const dt = Math.min(64, t - (last || t)); last = t;
+    progress = Math.max(0, Math.min(1, progress + (humming ? dt / FILL_MS : -dt / 900)));
+    draw();
+    if (humming) {
+      const hz = 210 + Math.round(Math.sin(t / 160) * 9 + Math.sin(t / 47) * 4);
+      readout.textContent = `~${hz} Hz · ${bands[gates % bands.length]} band`;
+    }
+    if (humming && progress >= 1) return complete();
+    if (humming || progress > 0) raf = requestAnimationFrame(tick); else { raf = 0; last = 0; }
+  };
+  const start = (e) => {
+    if (e) e.preventDefault();
+    if (humming) return;
+    humming = true; humBtn.setAttribute("aria-pressed", "true"); humBtn.textContent = "Humming…";
+    clearTimeout(gateCloseTimer);
+    gateEl.classList.remove("open");
+    say("Mmmmmm… keep going, you're filling the dial!");
+    if (!raf) { last = 0; raf = requestAnimationFrame(tick); }
+  };
+  const stop = () => {
+    if (!humming) return;
+    humming = false; humBtn.setAttribute("aria-pressed", "false"); humBtn.textContent = "Hold to hum";
+    if (progress < 1) { readout.textContent = "dial draining…"; say("Almost! Hold a little longer next time."); }
+    if (!raf) { last = 0; raf = requestAnimationFrame(tick); }
+  };
+  const complete = () => {
+    humming = false; raf = 0; last = 0; progress = 0;
+    humBtn.setAttribute("aria-pressed", "false"); humBtn.textContent = "Hold to hum";
+    gates += 1; gatesEl.textContent = gates;
+    readout.textContent = "gate open!";
+    setPose("mascot-happy"); holdPose = Date.now() + 1800;
+    rileyBtn.classList.remove("pop"); void rileyBtn.offsetWidth; rileyBtn.classList.add("pop");
+    gateEl.classList.add("open");
+    clearTimeout(gateCloseTimer);
+    gateCloseTimer = setTimeout(() => {
+      gateEl.classList.remove("open");
+      readout.textContent = "dial ready";
+      say("The gate closed behind us. Hold to hum and open another one!");
+    }, GATE_OPEN_MS);
+    burst(18);
+    say(gates === 1 ? "You did it! The gate is sliding open!" : `Gate ${gates} open! Your hum is magic.`);
+    setTimeout(draw, 420);
+  };
+  humBtn.addEventListener("pointerdown", start);
+  ["pointerup", "pointerleave", "pointercancel"].forEach((ev) => humBtn.addEventListener(ev, stop));
+  humBtn.addEventListener("keydown", (e) => { if ((e.key === " " || e.key === "Enter") && !e.repeat) start(e); });
+  humBtn.addEventListener("keyup", (e) => { if (e.key === " " || e.key === "Enter") stop(); });
+  humBtn.addEventListener("contextmenu", (e) => e.preventDefault());
+  draw();
+
+  // ── feelings picker (the game's own nine pets + lines) ───────────
+  const pets = [
+    ["happy", "Happy", "The happy puppy is so glad you came to the garden!"],
+    ["sad", "Sad", "The rain bird feels a little blue. Sitting together helps."],
+    ["fear", "Fear", "The gentle duck feels wobbly. Slow breaths, little friend."],
+    ["disgust", "Disgust", "The wolf pup wrinkles its nose. Some days are like that!"],
+    ["angry", "Angry", "The hedgehog huffs and puffs. It's okay to feel angry sometimes."],
+    ["surprised", "Surprised", "The squirrel can't believe it! What a day of surprises."],
+    ["bored", "Bored", "The chameleon is taking it slow. Slow days are okay too."],
+    ["irritated", "Irritated", "The otter crosses its arms. Prickly feelings pass."],
+    ["tired", "Tired", "The bunny is so sleepy. Rest is how gardens grow."],
+  ];
+  const petsEl = $("mfr-pets"), replyImg = $("mfr-reply-img"), reply = $("mfr-reply");
+  pets.forEach(([id, label, line], i) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "pet"; b.setAttribute("aria-pressed", i === 0 ? "true" : "false");
+    b.innerHTML = `<img src="${A}pet-${id}.webp" alt="" width="220" height="220" loading="lazy"><span>${label}</span>`;
+    b.addEventListener("click", () => {
+      petsEl.querySelectorAll(".pet").forEach((p) => p.setAttribute("aria-pressed", "false"));
+      b.setAttribute("aria-pressed", "true");
+      replyImg.src = `${A}pet-${id}-react.webp`;
+      replyImg.alt = `${label} pet reacting`;
+      reply.textContent = line;
+    });
+    petsEl.appendChild(b);
+  });
+})();
+</script>
+
+</body>
+</html>
